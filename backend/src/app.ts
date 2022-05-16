@@ -1,14 +1,16 @@
 import configs from './configs';
-import Koa from 'koa';
+import Koa, { Context, Next } from 'koa';
 import KoaRouter from 'koa-router'
 import {bootstrapControllers} from 'koa-ts-controllers';
 import path from 'path';
 import KoaBodyParser from 'koa-bodyparser'
-import { Context } from 'vm';
 import Boom from '@hapi/Boom';
-import {Sequelize} from 'sequelize-typescript'
-
-
+import {Sequelize} from 'sequelize-typescript';
+import jwt from 'jsonwebtoken';
+interface UserInfo {
+    id: number;
+    name: string;
+}
 (async () => {
     const app = new Koa();
     const router = new KoaRouter();
@@ -18,6 +20,14 @@ import {Sequelize} from 'sequelize-typescript'
         ...configs.database, 
         models: [__dirname + '/models/**/*']
     });
+
+    app.use(async (ctx: Context, next : Next) => {
+        let token = ctx.headers['authorization'];
+        if (token) {
+            ctx.userInfo = jwt.verify(token, configs.jwt.privateKey) as UserInfo;
+        }
+        await next()
+    })
 
     await bootstrapControllers(app, {
         router,

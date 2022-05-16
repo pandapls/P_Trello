@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/koa": "^2.13.4",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-router": "^7.4.0",
@@ -28,6 +29,7 @@
   "dependencies": {
     "@hapi/boom": "^10.0.0",
     "class-validator": "^0.13.2",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.3.0",

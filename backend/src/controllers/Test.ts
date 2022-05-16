@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Params, Post, Query } from 'koa-ts-controllers'
+import { Body, Controller, Ctx, Get, Params, Post, Query, Flow } from 'koa-ts-controllers'
 
 import {IsNumberString, IsNumber} from 'class-validator';
+import { Context } from 'koa';
+import authorization from '../middlewares/authorization';
 
 class GetUsersQuery {
     @IsNumberString({},{
@@ -48,5 +50,18 @@ class TestController {
         @Query() q : GetUsersQuery
     ){
         return 'query' + JSON.stringify(q)
+    }
+
+    @Get('/auth')
+    @Flow([authorization])
+    async auth(
+        @Ctx() ctx: Context
+    ){
+        return 'sss'
+    }
+
+    @Get('/noauth')
+    async noAuth() {
+        return '随便看'
     }
 }

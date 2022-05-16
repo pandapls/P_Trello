@@ -16,15 +16,20 @@ const configs = {
             host : 'localhost',
             port : 8080,
         },
-        database: databaseConfig.development as IDatabaseConfig
+        database: databaseConfig.development as IDatabaseConfig,
+        jwt : {
+            privateKey: 'ppx'
+        }
     },
     production : {
         server :  {
             host : 'localhost',
             port : 8080,
         },
-        database: databaseConfig.production as IDatabaseConfig
-
+        database: databaseConfig.production as IDatabaseConfig,
+        jwt : {
+            privateKey: 'ppx'
+        }
     }
 };
 
